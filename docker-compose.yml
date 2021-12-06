@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql-address_book_db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=address_book_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - 3333:3306
+volumes:
+  db:
