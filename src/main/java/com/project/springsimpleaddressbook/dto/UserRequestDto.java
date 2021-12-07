@@ -19,7 +19,7 @@ public class UserRequestDto {
 
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     @Pattern(regexp="(^[a-zA-Z]{3,50}$)", message = "Name must be of characters")
-    @NotEmpty(message = "Name is mandatory")
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     @Size(min = 3, max = 50, message = "Surname must be between 3 and 50 characters")
