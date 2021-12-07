@@ -40,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
     public Address update(AddressRequestDto addressRequestDto,Long addressId) {
         Address address = addressConverter.addressRequestDtoToAddress(addressRequestDto);
         if(!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException(String.format("User with id %d not found.", addressId));
+            throw new AddressNotFoundException(String.format("Address with id %d not found.", addressId));
         }
         return addressRepository.save(address);
     }
@@ -48,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public void delete(Long addressId) {
         if(!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException(String.format("User with id %d not found.", addressId));
+            throw new AddressNotFoundException(String.format("Address with id %d not found.", addressId));
         }
         addressRepository.deleteById(addressId);
     }
