@@ -1,7 +1,7 @@
 package com.project.springsimpleaddressbook.controller;
 
-import com.project.springsimpleaddressbook.dto.UserRequestDto;
-import com.project.springsimpleaddressbook.model.User;
+import com.project.springsimpleaddressbook.model.dto.request.UserRequestDto;
+import com.project.springsimpleaddressbook.model.dto.response.UserResponseDto;
 import com.project.springsimpleaddressbook.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +27,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAll(){
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<UserResponseDto>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAll());
     }
 
-    @PostMapping
-    public ResponseEntity<User> save(@Valid @RequestBody UserRequestDto userRequestDto){
+    @PostMapping({"", "/"})
+    public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto){
         return ResponseEntity.status(HttpStatus.OK).body(userService.save(userRequestDto));
     }
 
@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long userId){
+    public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(userRequestDto, userId));
     }
 }

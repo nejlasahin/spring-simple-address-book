@@ -1,13 +1,13 @@
 package com.project.springsimpleaddressbook.service;
 
-import com.project.springsimpleaddressbook.dto.AddressRequestDto;
-import com.project.springsimpleaddressbook.model.Address;
+import com.project.springsimpleaddressbook.model.dto.request.AddressRequestDto;
+import com.project.springsimpleaddressbook.model.dto.response.AddressResponseDto;
 
 import java.util.List;
 
 public interface AddressService {
-    Address save(AddressRequestDto addressRequestDto, Long userId);
-    Address update(AddressRequestDto addressRequestDto, Long addressId);
+    AddressResponseDto save(AddressRequestDto addressRequestDto, Long userId);
+    AddressResponseDto update(AddressRequestDto addressRequestDto, Long addressId);
     void delete(Long addressId);
-    List<Address> getAll();
+    List<AddressResponseDto> getAll();
 }

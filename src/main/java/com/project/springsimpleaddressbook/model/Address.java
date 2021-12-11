@@ -30,10 +30,10 @@ public class Address{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "country")
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "city")
+    @Column(name = "city", nullable = false)
     private String city;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -41,9 +41,4 @@ public class Address{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    public Address(String country, String city, User user) {
-        this.country = country;
-        this.city = city;
-        this.user = user;
-    }
 }

@@ -2,7 +2,6 @@ package com.project.springsimpleaddressbook.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,11 +17,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleValidationException (MethodArgumentNotValidException exceptions){
         Map<String,String> validationErrors = new HashMap<>();
-        /*
-        for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
-            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        */
         exceptions.getBindingResult().getFieldErrors()
                 .forEach(fieldError -> validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage()));
 

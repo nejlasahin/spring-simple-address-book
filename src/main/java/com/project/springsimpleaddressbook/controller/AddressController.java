@@ -1,7 +1,7 @@
 package com.project.springsimpleaddressbook.controller;
 
-import com.project.springsimpleaddressbook.dto.AddressRequestDto;
-import com.project.springsimpleaddressbook.model.Address;
+import com.project.springsimpleaddressbook.model.dto.request.AddressRequestDto;
+import com.project.springsimpleaddressbook.model.dto.response.AddressResponseDto;
 import com.project.springsimpleaddressbook.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addresses")
+@RequestMapping("/addresses/")
 public class AddressController {
 
     private final AddressService addressService;
@@ -27,13 +27,13 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Address>> getAll(){
+    @GetMapping({"", "/"})
+    public ResponseEntity<List<AddressResponseDto>> getAll(){
         return ResponseEntity.status(HttpStatus.OK).body(addressService.getAll());
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<Address> save(@Valid @RequestBody AddressRequestDto addressRequestDto, @PathVariable Long userId){
+    public ResponseEntity<AddressResponseDto> save(@Valid @RequestBody AddressRequestDto addressRequestDto, @PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(addressService.save(addressRequestDto, userId));
     }
 
@@ -44,7 +44,7 @@ public class AddressController {
     }
 
     @PutMapping("/{addressId}")
-    public ResponseEntity<Address> update(@RequestBody AddressRequestDto addressRequestDto,@PathVariable Long addressId){
+    public ResponseEntity<AddressResponseDto> update(@RequestBody AddressRequestDto addressRequestDto, @PathVariable Long addressId){
         return ResponseEntity.status(HttpStatus.OK).body(addressService.update(addressRequestDto, addressId));
     }
 }

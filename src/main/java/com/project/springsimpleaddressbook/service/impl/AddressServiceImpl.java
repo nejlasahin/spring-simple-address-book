@@ -1,12 +1,12 @@
 package com.project.springsimpleaddressbook.service.impl;
 
-
 import com.project.springsimpleaddressbook.converter.AddressConverter;
-import com.project.springsimpleaddressbook.dto.AddressRequestDto;
+import com.project.springsimpleaddressbook.model.dto.request.AddressRequestDto;
 import com.project.springsimpleaddressbook.exception.AddressNotFoundException;
 import com.project.springsimpleaddressbook.exception.UserNotFoundException;
 import com.project.springsimpleaddressbook.model.Address;
 import com.project.springsimpleaddressbook.model.User;
+import com.project.springsimpleaddressbook.model.dto.response.AddressResponseDto;
 import com.project.springsimpleaddressbook.repository.AddressRepository;
 import com.project.springsimpleaddressbook.repository.UserRepository;
 import com.project.springsimpleaddressbook.service.AddressService;
@@ -28,33 +28,32 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address save(AddressRequestDto addressRequestDto, Long userId) {
+    public AddressResponseDto save(AddressRequestDto addressRequestDto, Long userId) {
         Address address = addressConverter.addressRequestDtoToAddress(addressRequestDto);
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User with id %d not found.", userId)));
         address.setUser(user);
-        return addressRepository.save(address);
+        return addressConverter.addressToAddressResponseDto(addressRepository.save(address));
     }
 
     @Override
-    public Address update(AddressRequestDto addressRequestDto,Long addressId) {
+    public AddressResponseDto update(AddressRequestDto addressRequestDto,Long addressId) {
         Address address = addressConverter.addressRequestDtoToAddress(addressRequestDto);
-        if(!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException(String.format("Address with id %d not found.", addressId));
-        }
-        return addressRepository.save(address);
+        addressRepository.findById(addressId)
+                .orElseThrow(() -> new AddressNotFoundException(String.format("Address with id %d not found.", addressId)));
+        return addressConverter.addressToAddressResponseDto(addressRepository.save(address));
     }
 
     @Override
     public void delete(Long addressId) {
-        if(!addressRepository.existsById(addressId)) {
-            throw new AddressNotFoundException(String.format("Address with id %d not found.", addressId));
-        }
+        addressRepository.findById(addressId)
+                .orElseThrow(() -> new AddressNotFoundException(String.format("Address with id %d not found.", addressId)));
         addressRepository.deleteById(addressId);
     }
 
     @Override
-    public List<Address> getAll() {
-        return addressRepository.findAll();
+    public List<AddressResponseDto> getAll() {
+        List<Address> addressList = addressRepository.findAll();
+        return addressConverter.addressListToAddressResponseDtoList(addressList);
     }
 }
