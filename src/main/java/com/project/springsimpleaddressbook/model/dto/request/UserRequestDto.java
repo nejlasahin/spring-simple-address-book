@@ -23,7 +23,7 @@ public class UserRequestDto {
     @Email(message = "Email is not valid")
     private String email;
 
-    @NotBlank(message = "Surname is mandatory")
+    @NotBlank(message = "Identity number is mandatory")
     private String identityNumber;
 
     @NotBlank(message = "Gender is mandatory")
